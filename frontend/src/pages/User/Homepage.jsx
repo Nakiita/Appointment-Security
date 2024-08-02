@@ -36,7 +36,7 @@ const Homepage = () => {
             />
           </div>
         </div>
-        <h3 className="text-center w-full text-xl font-semibold mb-6">FIND YOUR DOCTOR</h3>
+        <h3 className="text-center w-full text-xl font-semibold mb-6 mt-20">FIND YOUR DOCTOR</h3>
         <div className="flex flex-wrap justify-center w-full">
           <div className="container mx-auto">
             <div className="flex flex-wrap -mx-3">
