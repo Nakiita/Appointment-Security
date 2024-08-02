@@ -17,24 +17,26 @@ const EmergencyContacts = () => {
   const filteredDoctors = doctors.filter((person) =>
     person.fullName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <div className="flex">
       <div className="w-full md:w-5/6">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col ml-[12rem]">
           <h3 className="mt-24 text-xl font-semibold">Doctors</h3>
           <p className="mb-6 text-gray-600">Contacts of Doctors.</p>
-          <div className="flex justify-center mb-6 w-full max-w-xl">
-            <div className="flex items-center w-full bg-gray-200 rounded">
-              <span className="px-3 py-2">
+          <div className="flex justify-center w-full">
+            <div className="flex items-center border rounded w-full max-w-md">
+              <span className="px-3 text-gray-500">
                 <FontAwesomeIcon icon={faSearch} />
               </span>
               <input
                 type="text"
                 placeholder="Search by Name"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full p-2 border-black rounded-r"
+                onChange={handleSearchChange}
+                className="flex-1 p-2 outline-none"
               />
             </div>
           </div>
@@ -52,7 +54,7 @@ const EmergencyContacts = () => {
               {filteredDoctors.map((doctor, index) => (
                 <tr key={doctor._id}>
                   <td className="py-2 px-4 border-b">{index + 1}</td>
-                  <td className="py-2 px-4 border-b">Dr. {doctor.fullName}</td>
+                  <td className="py-2 px-4 border-b">{doctor.fullName}</td>
                   <td className="py-2 px-4 border-b">{doctor.phoneNumber}</td>
                 </tr>
               ))}
