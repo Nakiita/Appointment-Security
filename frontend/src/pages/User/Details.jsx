@@ -100,7 +100,7 @@ const Details = () => {
               alt={fullName}
             />
             <div className="text-black">
-              <h3 className="text-2xl font-bold text-blue-600">Dr. {fullName}</h3>
+              <h3 className="text-2xl font-bold text-blue-600">{fullName}</h3>
               <h4 className="text-lg font-semibold text-green-600">{qualification}</h4>
               <p className="text-gray-700 mt-2">
                 <strong>Email:</strong> {email}<br />
