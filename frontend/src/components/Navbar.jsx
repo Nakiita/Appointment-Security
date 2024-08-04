@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import UserAvatar from "./UserAvatar";
 
 const Navbar = () => {
   // Get user data from local storage
@@ -16,6 +17,7 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  // const isLoginPage = location.pathname === "/login";
   // Dropdown state
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -69,40 +71,19 @@ const Navbar = () => {
 
           <div className="flex items-center space-x-2 relative">
             {user ? (
-              <div className="relative">
-                <button
-                  onClick={toggleDropdown}
-                  className="btn bg-gray-800 text-white px-4 py-2 rounded focus:outline-none"
-                >
-                  {user.UserName}
-                </button>
-                {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-48">
-                    <Link to="/homepage" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                      Dashboard
-                    </Link>
-                    <Link to="/emergency" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                      Emergency Contacts
-                    </Link>
-                    <Link to="/user-profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                      Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="text-left w-full px-4 py-2 text-gray-800 hover:bg-gray-100"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
+              <UserAvatar user={user} handleLogout={handleLogout} />
             ) : (
-              <button
-                onClick={handleLogin}
-                className="btn bg-white text-red-500 border border-red-500 px-4 py-2 rounded hover:bg-red-500 hover:text-white"
-              >
-                Login
-              </button>
+              <>
+                {!handleLogin && (
+                  <button
+                    type="button"
+                    onClick={handleLogin}
+                    className="text-white bg-black font-medium rounded-lg text-sm px-4 py-2 ml-4"
+                  >
+                    Login/Register
+                  </button>
+                )}
+              </>
             )}
           </div>
         </nav>
