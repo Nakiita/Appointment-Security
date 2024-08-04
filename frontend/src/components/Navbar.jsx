@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 
 const Navbar = () => {
   // Get user data from local storage
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
 
   // Logout function
   const navigate = useNavigate();
@@ -73,11 +76,11 @@ const Navbar = () => {
               <UserAvatar user={user} handleLogout={handleLogout} />
             ) : (
               <>
-                {!handleLogin && (
+                {!isLoginPage && (
                   <button
                     type="button"
                     onClick={handleLogin}
-                    className="text-white bg-black font-medium rounded-lg text-sm px-4 py-2 ml-4"
+                      className=" btn bg-white border border-black px-4 py-2 rounded"
                   >
                     Login/Register
                   </button>
