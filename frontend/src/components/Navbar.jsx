@@ -17,7 +17,6 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  // const isLoginPage = location.pathname === "/login";
   // Dropdown state
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
