@@ -51,18 +51,18 @@ const UserAvatar = ({ user, handleLogout }) => {
           <ul className="py-2" aria-labelledby="user-menu-button">
             <li>
               <Link
-                to="/user"
+                to="/user-profile"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
               >
                 Profile
               </Link>
             </li>
             <li>
-              <Link
-                to="/order-history"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-              >
-                Order History
+              <Link to="/homepage" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                Dashboard
+              </Link>
+              <Link to="/emergency" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                Emergency Contacts
               </Link>
             </li>
             <li>
