@@ -30,13 +30,13 @@ const Navbar = () => {
 
   return (
     <header className="bg-white sticky top-0 z-50 ">
-      <div className="container max-w-6xl mx-auto px-4">
-        <nav className="flex justify-between items-center py-3">
+      <div className="container ml-[7rem]">
+        <nav className="flex justify-between items-center py-3 ">
           <Link to="/">
             <img
               src="../assets/images/logo.png"
               alt="logo"
-              className="h-12 mr-3"
+              className="h-12 mr-5"
             />
           </Link>
           <div className="flex md:hidden">
