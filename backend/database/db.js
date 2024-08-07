@@ -1,5 +1,3 @@
-//import
-
 const mongoose = require("mongoose");
 
 //list of function
