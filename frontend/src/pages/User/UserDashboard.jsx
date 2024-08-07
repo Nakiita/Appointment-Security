@@ -208,11 +208,11 @@ const UserDashboard = () => {
           </section>
 
           {/* Contact Section */}
-          <section className="bg-gray-100 py-10" id="contact">
+          <section className="bg-gray-100" id="contact">
             <div className="container mx-auto">
-              <div className="flex flex-wrap items-center justify-center min-h-screen mt-6">
+              <div className="flex flex-wrap items-center justify-center min-h-screen">
                 <div className="w-full md:w-1/2 p-5">
-                  <div className="bg-white p-6 shadow-lg rounded-lg">
+                  <div className="bg-white p-6 shadow-lg rounded-lg mb-[4.5rem]">
                     <h3 className="text-2xl font-semibold">Get In Touch</h3>
                     <p className="mt-4">
                       Whether you’re interested in a live product demonstration
@@ -232,16 +232,17 @@ const UserDashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 p-5 hidden md:block" data-aos="fade-left">
+                <div className="w-full md:w-1/2 p-5 md:block" data-aos="fade-left">
                   <img
-                    src="../assets/images/home.png"
+                    src="../assets/images/Login.webp"
                     className="w-full rounded-lg"
-                    alt=""
+                    alt="Home Image"
                   />
                 </div>
               </div>
             </div>
           </section>
+
           <Footer />
 
         </div>
