@@ -54,11 +54,10 @@ const UserDashboard = () => {
 
                 <div className="card mb-4 p-5 bg-white shadow-lg">
                   <h3 className="text-2xl font-semibold mb-2">
-                    <FontAwesomeIcon icon={faProcedures} /> Emergency Rooms
+                    <FontAwesomeIcon icon={faProcedures} /> Emergency Contacts
                   </h3>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eaque, quis.
+                    For emergency contact, click on the dropdown button where you can find the emergency contact. 
                   </p>
                 </div>
 
