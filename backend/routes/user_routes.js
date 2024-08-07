@@ -6,7 +6,6 @@ const { authGuard } = require("../middleware/authGuard");
 // create user api
 router.post("/register", user_controller.createUser);
 
-//  task 1: create login api
 router.post("/login", user_controller.loginUser);
 
 router.post("/forgot/password", user_controller.forgotPassword);
@@ -22,5 +21,5 @@ router.delete("/deleteUser/:id", user_controller.deleteUser);
 router.get("/getPagination", user_controller.getPagination);
 
 router.put("/update_user/:id", user_controller.updateUser);
-// exporting
+
 module.exports = router;
