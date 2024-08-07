@@ -91,7 +91,6 @@ const getSingleDoctor = async (req, res) => {
       doctor: singleDoctor,
     });
   } catch (error) {
-    console.log(error);
     res.send("Internal Server Error");
   }
 };
