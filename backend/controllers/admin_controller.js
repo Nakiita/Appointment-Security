@@ -97,7 +97,6 @@ const getSingleDoctor = async (req, res) => {
 
 //update details of doctor
 const updateDoctor = async (req, res) => {
-  console.log(req.files);
 
   //destructuring data
   const {
