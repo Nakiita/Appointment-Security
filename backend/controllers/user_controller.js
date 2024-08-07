@@ -257,7 +257,6 @@ const getSingleUser = async (req, res) => {
       user: singleUser,
     });
   } catch (error) {
-    console.log(error);
     res.send("Internal Server Error");
   }
 };
@@ -281,7 +280,6 @@ const deleteUser = async (req, res) => {
 
 const getPagination = async (req, res) => {
   const page = parseInt(req.query.page);
-  console.log();
   const pageSize = 5;
 
   // Calculate the start and end indexes for the requested page
