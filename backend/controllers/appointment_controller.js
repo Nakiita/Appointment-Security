@@ -41,7 +41,6 @@ const getAppointments = async (req, res) => {
       appointments: allAppointments,
     });
   } catch (error) {
-    console.log(error);
     res.send("Internal server error");
   }
 };
