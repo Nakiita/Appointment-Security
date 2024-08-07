@@ -32,7 +32,7 @@ const UserDashboard = () => {
                   <span className="text-blue-700">stay</span> healthy.
                 </h1>
                 <h3 className="text-xl my-4">Caring for you.</h3>
-                <a href="/login" className="btn btn-primary">
+                <a href="/login" >
                   Learn More
                 </a>
               </div>
@@ -213,7 +213,7 @@ const UserDashboard = () => {
           {/* Contact Section */}
           <section className="bg-gray-100 py-10" id="contact">
             <div className="container mx-auto">
-              <div className="flex flex-wrap items-center justify-center min-h-screen">
+              <div className="flex flex-wrap items-center justify-center min-h-screen mt-6">
                 <div className="w-full md:w-1/2 p-5" data-aos="fade-right">
                   <div className="bg-white p-6 shadow-lg rounded-lg">
                     <h3 className="text-2xl font-semibold">Get In Touch</h3>
