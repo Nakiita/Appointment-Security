@@ -5,7 +5,6 @@ router.post('/bookappointment', appointmentController.bookAppointment)
 
 router.get("/getappointment", appointmentController.getAppointments)
 
-//single doctor
 router.get("/getSingleAppointment/:id",appointmentController.getSingleAppointment)
 
 router.delete("/deleteAppointment/:id", appointmentController.deleteAppointment)
