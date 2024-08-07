@@ -97,12 +97,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen justify-center items-center">
-      <div className="overflow-hidden flex bg-white text-black ml-10 rounded-lg">
+    <div className="flex h-screen justify-center items-center overflow-hidden">
+      <div className="flex bg-white text-black ml-10 rounded-lg">
         <img
-          src="./assets/images/Login.jpg"
+          src="./assets/images/register.jpg"
           alt="login image"
-          className="w-full object-cover"
+          className="w-full object-cover mb-[5rem]"
         />
       </div>
 
