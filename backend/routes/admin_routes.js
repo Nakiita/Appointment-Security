@@ -13,7 +13,6 @@ router.get("/get_doctor/:id",adminController.getSingleDoctor)
 router.put("/update_doctor/:id",authGuardAdmin, adminController.updateDoctor)
 
 //delete doctors
-
 router.delete("/delete_doctor/:id",authGuardAdmin, adminController.deleteDoctor)
 
 router.get('/getPagination', adminController.getPagination)
