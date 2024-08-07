@@ -211,7 +211,6 @@ const deleteDoctor = async (req, res) => {
 
 const getPagination = async (req, res) => {
   const page = parseInt(req.query.page);
-  console.log();
   const pageSize = 5;
 
   // Calculate the start and end indexes for the requested page
