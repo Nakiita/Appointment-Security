@@ -61,7 +61,6 @@ const createUser = async (req, res) => {
       message: "User created successfully.",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json("Server Error");
   }
 };
