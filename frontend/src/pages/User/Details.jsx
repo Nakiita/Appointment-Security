@@ -90,7 +90,7 @@ const Details = () => {
   };
 
   return (
-    <section className="flex justify-center items-center min-h-screen bg-gray-100">
+    <section className="flex justify-center mt-[10rem]">
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl w-full">
         <div className="flex justify-between">
           <div className="flex items-center space-x-6">
