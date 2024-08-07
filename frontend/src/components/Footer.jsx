@@ -8,7 +8,7 @@ import {
 const Footer = () => {
     return(
                 <>
-        <section>
+        <section className="bg-black text-white">
         <div className="container mx-auto flex flex-wrap justify-between">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <a href="#" className="flex items-center">
