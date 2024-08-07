@@ -17,8 +17,6 @@ const securePassword = async (password) => {
 };
 
 const createUser = async (req, res) => {
-  // step 1 : Check if data is coming or not
-  console.log(req.body);
 
   // step 2 : Destructure the data
   const { UserName, email, phoneNumber, password, confirmPassword } = req.body;
