@@ -55,7 +55,6 @@ const getSingleAppointment = async (req, res) => {
       appointment: singleAppointment,
     });
   } catch (error) {
-    console.log(error);
     res.send("Internal Server Error");
   }
 };
