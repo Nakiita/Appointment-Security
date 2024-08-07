@@ -62,7 +62,6 @@ const createDoctor = async (req, res) => {
       message: "Doctor added successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",
