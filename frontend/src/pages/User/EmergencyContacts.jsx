@@ -25,7 +25,7 @@ const EmergencyContacts = () => {
     <div className="flex">
       <div className="w-full md:w-5/6">
         <div className="flex flex-col ml-[12rem]">
-          <h3 className="mt-24 text-xl font-semibold">Doctors</h3>
+          <h3 className="text-xl font-semibold">Doctors</h3>
           <p className="mb-6 text-gray-600">Contacts of Doctors.</p>
           <div className="flex justify-center w-full">
             <div className="flex items-center border rounded w-full max-w-md">
