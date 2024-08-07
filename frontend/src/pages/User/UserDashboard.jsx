@@ -57,7 +57,7 @@ const UserDashboard = () => {
                     <FontAwesomeIcon icon={faProcedures} /> Emergency Contacts
                   </h3>
                   <p>
-                    For emergency contact, click on the dropdown button where you can find the emergency contact. 
+                    For emergency contact, click on the dropdown button where you can find the emergency contact.
                   </p>
                 </div>
 
@@ -209,10 +209,10 @@ const UserDashboard = () => {
 
           {/* Contact Section */}
           <section className="bg-gray-100" id="contact">
-            <div className="container mx-auto">
+            <div >
               <div className="flex flex-wrap items-center justify-center min-h-screen">
                 <div className="w-full md:w-1/2 p-5">
-                  <div className="bg-white p-6 shadow-lg rounded-lg mb-[4.5rem]">
+                  <div className="bg-white p-6 shadow-lg rounded-lg">
                     <h3 className="text-2xl font-semibold">Get In Touch</h3>
                     <p className="mt-4">
                       Whether you’re interested in a live product demonstration
@@ -221,16 +221,15 @@ const UserDashboard = () => {
                       is always more than happy to lend a hand.
                     </p>
                   </div>
-                  <div className="mt-8">
-                    <div className="mb-4">
-                      <h3 className="text-xl font-semibold">Email:</h3>
-                      <p>healthcare@example.test</p>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold">Contact:</h3>
-                      <p>+977 9876543231</p>
-                    </div>
+                  <div className="mb-[4rem] mt-[4rem]">
+                    <h3 className="text-xl font-semibold">Email:</h3>
+                    <p>healthcare@example.test</p>
                   </div>
+                  <div>
+                    <h3 className="text-xl font-semibold">Contact:</h3>
+                    <p>+977 9876543231</p>
+                  </div>
+
                 </div>
                 <div className="w-full md:w-1/2 p-5 md:block" data-aos="fade-left">
                   <img
