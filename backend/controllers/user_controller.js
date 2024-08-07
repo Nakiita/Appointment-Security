@@ -68,7 +68,6 @@ const createUser = async (req, res) => {
 
 const verifyMail = async (req, res) => {
   try {
-    console.log("Verify Mail Request Params:", req.params); // Check the request parameters
     const updateInfo = await Users.updateOne(
       {
         _id: req.params.id,
