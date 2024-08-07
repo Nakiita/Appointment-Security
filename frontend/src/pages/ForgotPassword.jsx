@@ -27,7 +27,7 @@ const ForgetPassword = () => {
       })
       .catch((error) => {
         console.error("Forgot Password API Error:", error);
-        throw error; // rethrow the error to maintain the error flow
+        toast.error("An error occurred while trying to reset the password.");
       });
   };
 
@@ -54,19 +54,18 @@ const ForgetPassword = () => {
                 <div className="mb-4">
                   <label className="block text-gray-700">Email address</label>
                   <input
-                onChange={forgotPasswordEmail}
-                value={setForgotPasswordEmail}
-                type="text"
-                id="email"
-                name="email"
-                className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
-              />
+                    onChange={handleForgotPasswordEmail}
+                    value={forgotPasswordEmail}
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                  />
                 </div>
                 <div className="flex justify-center">
                   <button
-                    onClick={handleSubmit}
                     className="btn w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-800"
-                    type="button"
+                    type="submit"
                   >
                     Send Request
                   </button>
