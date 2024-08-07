@@ -208,9 +208,12 @@ const UserDashboard = () => {
           </section>
 
           {/* Contact Section */}
-          <section className="bg-gray-100" id="contact">
+          <section id="contact">
             <div >
-              <div className="flex flex-wrap items-center justify-center min-h-screen">
+              <h1 className="text-4xl font-bold text-center mb-10 mt-10">
+                <span>'</span> Contact Us <span>'</span>
+              </h1>
+              <div className="flex flex-wrap items-center justify-center mt-">
                 <div className="w-full md:w-1/2 p-5">
                   <div className="bg-white p-6 shadow-lg rounded-lg">
                     <h3 className="text-2xl font-semibold">Get In Touch</h3>
