@@ -82,7 +82,6 @@ const verifyMail = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.error("Verify Mail Error:", error); // Check the error message
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -287,7 +286,6 @@ const getPagination = async (req, res) => {
   const endIndex = page * pageSize;
   const users = await Users.find();
 
-  console.log(startIndex, endIndex);
   // Slice the products array based on the indexes
   const paginatedUsers = users.slice(startIndex, endIndex);
 
@@ -359,7 +357,6 @@ const updateUser = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       success: false,
       message: "Internal server error",
