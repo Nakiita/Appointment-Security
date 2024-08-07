@@ -9,8 +9,7 @@ const authGuard = (req, res, next) => {
       message: "Authorization header missing!",
     });
   }
-  //Split auth header and get token
-  //Format : 'Bearer ghjklkjhgfdfghjkl'
+
   const token = authHeader.split(" ")[1];
   if (!token) {
     return res.json({
