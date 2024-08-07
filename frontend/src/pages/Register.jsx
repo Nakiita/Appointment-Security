@@ -180,14 +180,15 @@ const Register = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="hidden lg:flex items-center justify-center flex-1 bg-white text-black rounded-lg">
+    <div className="flex h-screen justify-center items-center overflow-hidden">
+      <div className="flex bg-white text-black ml-10 rounded-lg">
         <img
-          src="../assets/images/Login.jpg"
-          alt="register image"
-          className="w-full"
+          src="./assets/images/register.jpg"
+          alt="login image"
+          className="w-full object-cover mb-[5rem]"
         />
       </div>
+
 
       <div className="w-full lg:w-1/2 flex items-center justify-center">
         <div className="max-w-md w-full p-6">
