@@ -299,9 +299,6 @@ const getPagination = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  // step 1 : check incomming data
-  console.log(req.files.profilePicture);
-
   // destructuring data
   const { UserName, email, phoneNumber, address } = req.body;
   const { profilePicture } = req.files;
