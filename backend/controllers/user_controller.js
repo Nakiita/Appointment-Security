@@ -77,7 +77,6 @@ const verifyMail = async (req, res) => {
         $set: { is_verified: 1 },
       }
     );
-    console.log("Update Info:", updateInfo); // Check the update info
     res.status(200).json({
       success: true,
     });
