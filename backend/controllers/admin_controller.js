@@ -77,7 +77,6 @@ const getDoctors = async (req, res) => {
       doctors: allDoctors,
     });
   } catch (error) {
-    console.log(error);
     res.send("Internal server error");
   }
 };
