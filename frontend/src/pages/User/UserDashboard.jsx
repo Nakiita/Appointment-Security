@@ -211,7 +211,7 @@ const UserDashboard = () => {
           <section className="bg-gray-100 py-10" id="contact">
             <div className="container mx-auto">
               <div className="flex flex-wrap items-center justify-center min-h-screen mt-6">
-                <div className="w-full md:w-1/2 p-5" data-aos="fade-right">
+                <div className="w-full md:w-1/2 p-5">
                   <div className="bg-white p-6 shadow-lg rounded-lg">
                     <h3 className="text-2xl font-semibold">Get In Touch</h3>
                     <p className="mt-4">
