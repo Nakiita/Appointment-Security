@@ -48,8 +48,7 @@ const UserDashboard = () => {
                     <FontAwesomeIcon icon={faUserDoctor} /> Doctor's Details
                   </h3>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eaque, quis.
+                    Doctors in this platform are well experienced and highly recommended.
                   </p>
                 </div>
 
