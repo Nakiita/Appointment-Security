@@ -8,7 +8,7 @@ import {
 const Footer = () => {
     return(
                 <>
-        <section className="bg-gray-900 text-white py-10">
+        <section>
         <div className="container mx-auto flex flex-wrap justify-between">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <a href="#" className="flex items-center">
@@ -28,16 +28,16 @@ const Footer = () => {
           <div className="w-full md:w-1/3 mb-6 md:mb-0 text-center">
             <h3 className="text-xl font-bold mb-4">Links</h3>
             <div className="flex flex-col">
-              <a href="/" className="mb-2 text-gray-400 hover:text-white">
+              <a href="/" className="mb-2 text-gray-400">
                 Home
               </a>
-              <a href="#about" className="mb-2 text-gray-400 hover:text-white">
+              <a href="#about" className="mb-2 text-gray-400">
                 About
               </a>
-              <a href="#facility" className="mb-2 text-gray-400 hover:text-white">
+              <a href="#facility" className="mb-2 text-gray-400">
                 Facility
               </a>
-              <a href="#contact" className="text-gray-400 hover:text-white">
+              <a href="#contact" className="text-gray-400 ">
                 Contact
               </a>
             </div>
@@ -47,19 +47,19 @@ const Footer = () => {
             <div className="flex flex-col items-center">
               <a
                 href="https://www.facebook.com"
-                className="mb-2 text-gray-400 hover:text-white"
+                className="mb-2 text-gray-400 "
               >
                 <FontAwesomeIcon icon={faFacebook} /> Facebook
               </a>
               <a
                 href="https://www.instagram.com"
-                className="mb-2 text-gray-400 hover:text-white"
+                className="mb-2 text-gray-400 "
               >
                 <FontAwesomeIcon icon={faInstagram} /> Instagram
               </a>
               <a
                 href="https://www.github.com/"
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 "
               >
                 <FontAwesomeIcon icon={faGithub} /> GitHub
               </a>
@@ -67,7 +67,7 @@ const Footer = () => {
           </div>
         </div>
         <h1 className="text-center text-gray-400 mt-8">
-          Created by <span className="text-white">Health Care</span> | All Rights Reserved.
+          Created by <span>Health Care</span> | All Rights Reserved.
         </h1>
       </section>
         </>
