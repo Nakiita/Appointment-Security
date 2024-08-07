@@ -224,7 +224,7 @@ const UserDashboard = () => {
                   <div className="mt-8">
                     <div className="mb-4">
                       <h3 className="text-xl font-semibold">Email:</h3>
-                      <p>info@example.com</p>
+                      <p>healthcare@example.test</p>
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold">Contact:</h3>
