@@ -67,8 +67,7 @@ const UserDashboard = () => {
                     Appointments
                   </h3>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eaque, quis.
+                    To book appointments with doctor, log into the website and find the doctor where you can see the details and book an appointment.
                   </p>
                 </div>
               </div>
