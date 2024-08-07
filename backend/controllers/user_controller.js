@@ -133,7 +133,6 @@ const loginUser = async (req, res) => {
       userData: user,
     });
   } catch (error) {
-    console.log(error);
     res.json({
       success: false,
       message: "Server Error",
@@ -243,7 +242,7 @@ const getUsers = async (req, res) => {
       users: allUsers,
     });
   } catch (error) {
-    console.log(error);
+
     res.status(500).send("Internal server error");
   }
 };
