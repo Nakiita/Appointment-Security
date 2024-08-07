@@ -88,9 +88,6 @@ const verifyMail = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  // step 1: Check incomming data
-  console.log(req.body);
-
   // destructuring
   const { email, password } = req.body;
 
