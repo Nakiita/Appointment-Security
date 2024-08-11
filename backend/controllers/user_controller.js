@@ -136,6 +136,9 @@ const loginUser = async (req, res) => {
   }
 };
 
+
+
+
 const forgotPassword = async (req, res) => {
   try {
     const user = await Users.findOne({ email: req.body.email });
