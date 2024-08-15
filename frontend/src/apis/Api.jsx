@@ -24,14 +24,14 @@ export const forgotPasswordApi = (data) =>
 
 //reset password
 export const resetPasswordApi = (data, token) =>
-  Api.put(`/api/user/password/reset/${token}`, data);
+  Api.post(`/api/user/password/reset/${token}`, data);
 
 export const getAllUsersApi = () => Api.get("/api/user/getUsers");
 
 export const getPagination = (currentPage) =>
   Api.get(`/api/user/getPagination?page=${currentPage}`);
 
-export const getSingleUserApi = (id) => Api.get(`/api/user/getUser/${id}`,config);
+export const getSingleUserApi = (id) => Api.get(`/api/user/getUser/${id}`, config);
 
 export const updateUserApi = (id, formData) =>
   Api.put(`/api/user/update_user/${id}`, formData, config);
@@ -72,3 +72,24 @@ export const deleteAppointmentApi = (id) =>
 
 export const getPaginationAppointmentApi = (currentPage) =>
   Api.get(`/api/appointment/getPagination?page=${currentPage}`);
+
+export const logoutApi = () => {
+  return Api.post('/api/user/logout', {}, { withCredentials: true });
+};
+
+// Example API call to check if the session is still valid
+export const checkSessionApi = () => {
+  return Api.get('/api/user/check-session', { withCredentials: true });
+};
+
+export const getAllLogsApi = () => {
+  return Api.get("/api/logs");
+};
+
+export const getSingleLogApi = (id) => {
+  return Api.get(`/api/logs/${id}`);
+};
+
+export const deleteLogApi = (id) => {
+  return Api.delete(`/api/logs/${id}`);
+};

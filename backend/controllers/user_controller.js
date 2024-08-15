@@ -6,6 +6,9 @@ const nodemailer = require("nodemailer");
 const generateToken = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary");
+const MAX_LOGIN_ATTEMPTS = 3; // Set max login attempts
+const LOCKOUT_DURATION = 30 * 60 * 1000; // 30 minutes lockout duration
+const CryptoJS = require("crypto-js");
 
 const securePassword = async (password) => {
   try {
@@ -15,112 +18,137 @@ const securePassword = async (password) => {
   }
 };
 
-const createUser = async (req, res) => {
+const encryptData = (data) => {
+  const ciphertext = CryptoJS.AES.encrypt(data, process.env.ENCRYPTION_KEY).toString();
+  return ciphertext;
+};
 
-  // step 2 : Destructure the data
+const decryptData = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.ENCRYPTION_KEY);
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText;
+};
+
+const createUser = async (req, res) => {
   const { UserName, email, phoneNumber, password, confirmPassword } = req.body;
 
-  // step 3 : validate the incomming data
+  // Validate incoming data
   if (!UserName || !email || !phoneNumber || !password || !confirmPassword) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "Please enter all the fields.",
     });
   }
 
-  // step 4 : try catch block
+  // Ensure passwords match
+  if (password !== confirmPassword) {
+    return res.status(400).json({
+      success: false,
+      message: "Passwords do not match.",
+    });
+  }
+
   try {
-    // step 5 : Check existing user
-    const existingUser = await Users.findOne({ email: email });
+    const encryptedPhoneNumber = encryptData(phoneNumber);
+
+    // Check if the user already exists
+    const existingUser = await Users.findOne({ email});
     if (existingUser) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "User already exists.",
       });
     }
 
-    // password encryption
-    const randomSalt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(password, randomSalt);
+    // Hash the password
+    const encryptedPassword = await bcrypt.hash(password, 10);
 
-    // step 6 : create new user
+    // Create a new user instance
     const newUser = new Users({
-      // fieldname : incomming data name
       UserName: UserName,
       email: email,
-      phoneNumber: phoneNumber,
+      phoneNumber: encryptedPhoneNumber,
       password: encryptedPassword,
-      confirmPassword: encryptedPassword,
+      confirmPassword: encryptedPassword
     });
 
-    // step 7 : save user and response
+    // Save the new user to the database
     await newUser.save();
-    res.status(200).json({
-      success: true,
-      message: "User created successfully.",
-    });
-  } catch (error) {
-    res.status(500).json("Server Error");
-  }
-};
 
-const verifyMail = async (req, res) => {
-  try {
-    const updateInfo = await Users.updateOne(
-      {
-        _id: req.params.id,
-      },
-      {
-        $set: { is_verified: 1 },
-      }
-    );
-    res.status(200).json({
+    // Respond with success
+    return res.status(200).json({
       success: true,
+      message: "User registered successfully.",
     });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error" });
+    console.error("Error creating user:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+      error: error.message,
+    });
   }
 };
 
 const loginUser = async (req, res) => {
-  // destructuring
   const { email, password } = req.body;
 
-  // validation
+
+  // Validate input
   if (!email || !password) {
     return res.json({
       success: false,
       message: "Please enter all fields.",
     });
   }
-  // try catch block
+
   try {
-    // finding user
-    const user = await Users.findOne({ email: email });
+
+    const user = await Users.findOne({ email: email});
     if (!user) {
       return res.json({
         success: false,
-        message: "User does not exists.",
+        message: "User does not exist.",
       });
     }
-    // Comparing password
+
     const databasePassword = user.password;
     const isMatched = await bcrypt.compare(password, databasePassword);
+
 
     if (!isMatched) {
       return res.json({
         success: false,
-        message: "Invalid Credentials.",
+        message: "Please enter valid password.",
       });
     }
 
-    // generate token token
+    // Check if the user is locked out
+    if (user.lockoutExpires && user.lockoutExpires > Date.now()) {
+      const remainingTimeInSeconds = Math.max(0, Math.ceil((user.lockoutExpires - Date.now()) / 1000));
+      const minutes = Math.floor(remainingTimeInSeconds / 60);
+      const seconds = remainingTimeInSeconds % 60;
+      return res.json({
+        success: false,
+        message: `Account locked. Try again later in ${minutes} minute(s) and ${seconds} second(s).`
+      });
+    }
+
+    user.loginAttempts = 0;
+    user.lockoutExpires = null;
+    await user.save();
+
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
     );
 
-    // response
+    req.session.userId = user._id;
+    req.session.isAdmin = user.isAdmin;
+    req.session.email = user.email;
+
     res.status(200).json({
       success: true,
       message: "Logged in successfully.",
@@ -128,6 +156,7 @@ const loginUser = async (req, res) => {
       userData: user,
     });
   } catch (error) {
+    console.error("Login error:", error);
     res.json({
       success: false,
       message: "Server Error",
@@ -135,9 +164,6 @@ const loginUser = async (req, res) => {
     });
   }
 };
-
-
-
 
 const forgotPassword = async (req, res) => {
   try {
@@ -213,10 +239,26 @@ const resetPassword = async (req, res) => {
       });
     }
 
+    const isOldPassword = await bcrypt.compare(req.body.password, user.password);
+
+    if (isOldPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "You cannot reuse a recent password.",
+      });
+    }
+
     const newPassword = await securePassword(req.body.password);
+
+    user.previousPasswords.push({ password: user.password });
     user.password = newPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
+
+    if (user.previousPasswords.length > 5) {
+      user.previousPasswords.shift();
+    }
+
     await user.save();
 
     res.status(200).json({
@@ -230,6 +272,7 @@ const resetPassword = async (req, res) => {
     });
   }
 };
+
 
 const getUsers = async (req, res) => {
   try {
@@ -363,6 +406,27 @@ const updateUser = async (req, res) => {
   }
 };
 
+const checkSession = (req, res) => {
+  if (req.session.userId) {
+    res.json({ success: true, message: 'Session is active' });
+  } else {
+    res.json({ success: false, message: 'Session expired' });
+  }
+};
+
+const logout = (req, res) => {
+  // Destroy the session to log the user out
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      return res.status(500).json({ success: false, message: 'Failed to log out. Please try again.' });
+    }
+
+    res.clearCookie('connect.sid');
+    res.json({ success: true, message: 'Logout successful' });
+  });
+};
+
 module.exports = {
   createUser,
   loginUser,
@@ -373,4 +437,6 @@ module.exports = {
   deleteUser,
   getPagination,
   updateUser,
+  logout,
+  checkSession
 };

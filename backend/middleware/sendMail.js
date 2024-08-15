@@ -1,4 +1,3 @@
-
 const nodeMail = require('nodemailer');
  
 exports.sendEmail = async (options) => {
@@ -17,6 +16,12 @@ exports.sendEmail = async (options) => {
         subject: options.subject,
         text: options.message,
     }
-    await transporter.sendMail(mailOptions);
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully');
+    } catch (error) {
+        console.error('Failed to send email:', error);
+        throw error; // Optionally rethrow to handle the error further up the call stack
+    }
 }
  

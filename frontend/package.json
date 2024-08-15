@@ -10,6 +10,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "crypto-js": "^4.2.0",
     "jest": "^27.5.1",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "react-scripts": "^5.0.1",
     "react-time-picker": "^6.6.0",
     "react-toastify": "^9.1.3",
+    "serve": "^14.2.3",
     "supertest": "^6.3.4",
     "tailwind": "^4.0.0",
     "tailwind-merge": "^2.4.0",
@@ -30,9 +32,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:coverage": "react-scripts test --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "tailwindcss": "^3.4.7"
   }
 }

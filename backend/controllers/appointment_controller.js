@@ -85,7 +85,7 @@ const getPagination = async (req, res) => {
   const endIndex = page * pageSize;
   const appointments = await Appointments.find();
 
-  console.log(startIndex, endIndex);
+  
   // Slice the products array based on the indexes
   const paginatedAppointments = appointments.slice(startIndex, endIndex);
 

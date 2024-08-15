@@ -6,6 +6,13 @@ const generateToken = (userId) => {
   });
   return token;
 };
+
+const sessionCheckMiddleware = (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ success: false, message: 'Session expired. Please log in again.' });
+  }
+  next();
+};
 module.exports = generateToken;
  
  

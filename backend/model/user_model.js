@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
+
 const userSchema = mongoose.Schema({
   profilePicture: {
     type: String,
@@ -27,6 +28,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  previousPasswords: [{
+    password: {
+      type: String,
+    },
+    addedAt: {
+      type: Date,
+      default: Date.now,
+    }
+  }],
   address: {
     type: String,
     default: null,  
@@ -56,6 +66,10 @@ userSchema.methods.getResetPasswordToken = function () {
 
   return resetToken;
 };
+userSchema.add({
+  lastLogin: { type: Date },
+  loginAttempts: { type: Number, default: 0 }
+});
 
 const Users = mongoose.model("users", userSchema);
 module.exports = Users;

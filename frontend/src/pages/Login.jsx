@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { loginApi } from "../apis/Api";
+import React, { useState } from "react"; // Added useEffect
+import { loginApi } from "../apis/Api"; // Import checkSessionApi
 import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
@@ -85,8 +85,8 @@ const Login = () => {
           toast.success(res.data.message);
           // Set token and user data in local storage
           localStorage.setItem("token", res.data.token);
-          const convertedJson = JSON.stringify(res.data.userData);
-          localStorage.setItem("user", convertedJson);
+          const userData = JSON.stringify(res.data.userData);
+          localStorage.setItem("user", userData);
           navigate(res.data.userData.isAdmin ? "/admin" : "/homepage");
         }
       })

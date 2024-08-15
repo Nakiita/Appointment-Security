@@ -32,6 +32,7 @@ const Sidebar = () => {
         <Link to="/admin" className="px-4 py-2 rounded hover:bg-gray-100 transition duration-200">Doctor</Link>
         <Link to="/admin/appointments" className="px-4 py-2 rounded hover:bg-gray-100 transition duration-200">Appointment</Link>
         <Link to="/admin/users" className="px-4 py-2 rounded hover:bg-gray-100 transition duration-200">User</Link>
+        <Link to="/admin/log" className="px-4 py-2 rounded hover:bg-gray-100 transition duration-200">Activity Log</Link>
       </nav>
     </div>
   );

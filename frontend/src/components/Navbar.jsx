@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
+import { toast } from "react-toastify";
+
 
 const Navbar = () => {
   // Get user data from local storage
@@ -12,9 +14,10 @@ const Navbar = () => {
   // Logout function
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-    window.location.reload();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
+    toast.success('You have been logged out.');
   };
   const handleLogin = () => {
     navigate("/login");

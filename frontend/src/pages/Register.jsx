@@ -15,6 +15,8 @@ const Register = () => {
   const [confirmPassword, setconfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("");
+  const [strengthColor, setStrengthColor] = useState("");
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
   const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
@@ -106,14 +108,14 @@ const Register = () => {
           message: "Password is required",
           path: ["password"],
         });
-      } else if (data.password.length < 8) {
+      } else if (data.password.length < 8 || data.password.length > 12) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "Password must be at least 8 characters long",
+          message: "Password must be between 8 and 12 characters long",
           path: ["password"],
         });
       } else if (
-        !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(
+        !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}/.test(
           data.password
         )
       ) {
@@ -138,6 +140,32 @@ const Register = () => {
         });
       }
     });
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    clearError("password");
+    updatePasswordStrength(newPassword);
+  };
+
+  const updatePasswordStrength = (password) => {
+    const length = password.length;
+    const hasNumbers = /\d/.test(password);
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (length >= 8 && hasNumbers && hasUpper && hasLower && hasSpecial) {
+      setPasswordStrength("Strong");
+      setStrengthColor("green"); // Set color to green for strong password
+    } else if (length >= 6 && hasNumbers && (hasUpper || hasLower) && hasSpecial) {
+      setPasswordStrength("Medium");
+      setStrengthColor("orange"); // Set color to yellow for medium password
+    } else {
+      setPasswordStrength("Weak");
+      setStrengthColor("red"); // Set color to red for weak password
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -257,15 +285,12 @@ const Register = () => {
               )}
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="relative">
                 <input
-                  onChange={changePassword}
+                  onChange={handlePasswordChange}
                   value={password}
                   type={showPassword ? "text" : "password"}
                   id="password"
@@ -283,8 +308,9 @@ const Register = () => {
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
               )}
-              <p className="text-xs text-gray-500 mt-1">
-                Must be at least 8 characters long and include uppercase, lowercase, number, and special character.
+              <p>
+                Password Strength:{" "}
+                <span style={{ color: strengthColor }}>{passwordStrength}</span>
               </p>
             </div>
 

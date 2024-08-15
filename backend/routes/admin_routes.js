@@ -2,7 +2,7 @@ const router = require('express').Router();
 const adminController = require("../controllers/admin_controller")
 const {authGuard, authGuardAdmin} = require('../middleware/authGuard');
 
-router.post('/create_doctor',authGuardAdmin, adminController.createDoctor)
+router.post('/create_doctor',authGuard, adminController.createDoctor)
 
 router.get("/get_doctors", adminController.getDoctors)
 

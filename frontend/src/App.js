@@ -22,6 +22,7 @@ import UserRoutes from "./pages/protected_routes/UserRoutes";
 import EmergencyContacts from "./pages/User/EmergencyContacts";
 import Footer from "./components/Footer";
 import UserProfile from "./pages/User/UserProfile";
+import LogDashboard from "./pages/admin/LogDashboard";
 
 
 function App() {
@@ -40,12 +41,14 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />}></Route>
         <Route element={<AdminRoutes />}>
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/edit/:id" element={<AdminEditDoctor />} />
+          <Route path="/admin/view/:id" element={<AdminView />} />
+          <Route path="/admin/appointments" element={<Appoinments />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/log" element={<LogDashboard />} />
         </Route>
 
-        <Route path="/admin/edit/:id" element={<AdminEditDoctor />} />
-        <Route path="/admin/view/:id" element={<AdminView />} />
-        <Route path="/admin/appointments" element={<Appoinments />} />
-        <Route path="/admin/users" element={<Users />} />
+
 
         <Route path="/sidebar" element={<Sidebar />} />
 

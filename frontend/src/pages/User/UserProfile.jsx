@@ -26,10 +26,15 @@ const UserProfile = () => {
     }
   }, [fetchedUser.profilePicture]);
 
+  useEffect(() => {
+    getUser();
+  });
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  console.log(fetchedUser);
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {

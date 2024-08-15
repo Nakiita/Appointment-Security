@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getSingleUserApi } from "../apis/Api";
-import getUser from "../utils/getUser";
 
 const Users = ({ data, currentUser }) => {
   const [userData, setUserData] = useState(null);
@@ -26,7 +25,7 @@ const Users = ({ data, currentUser }) => {
         <img className="w-10 h-10 rounded-full" src={userData?.previewImage} alt="" />
         <div className="font-medium">
           <div>{userData?.UserName}</div>
-          <div className="text-sm text-gray-500">Joined in August 2014</div>
+          
         </div>
       </div>
       <hr className="border-gray-300" />

@@ -1,14 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { getAllDoctorsApi } from "../../apis/Api";
-import { Link } from "react-router-dom";
+import { checkSessionApi, getAllDoctorsApi } from "../../apis/Api";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const Homepage = () => {
   const [doctors, setDoctors] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const checkSession = async () => {
+    try {
+      const response = await checkSessionApi();
+      console.log(response);
+      if (response.data.success === false) {
+        // Handle session expiration
+        toast.error('Session expired. Please log in again.');
+        localStorage.removeItem('token'); // Clear the token from local storage
+        localStorage.removeItem('user'); // Clear user data from local storage
+        navigate('/login'); // Redirect to login page
+      }
+    } catch (error) {
+      console.error('Session check failed', error);
+      // Optionally handle other errors (e.g., network issues)
+    }
+  };
 
+  useEffect(
+    () => {
+
+      checkSession();
+      const intervalId = setInterval(checkSession, 5 * 60 * 1000); // Check every 5 minutes
+      return () => clearInterval(intervalId);
+    }, []); // Dependency array includes navigate
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
+    toast.success('You have been logged out.');
+  };
   useEffect(() => {
+
     getAllDoctorsApi().then((res) => {
       setDoctors(res.data.doctors);
     });
