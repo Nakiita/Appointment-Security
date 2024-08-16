@@ -124,6 +124,15 @@ const loginUser = async (req, res) => {
       });
     }
 
+    const passwordAge = Date.now() - (user.passwordChangedAt?.getTime() || 0);
+    const MAX_PASSWORD_AGE = 90 * 24 * 60 * 60 * 1000; // 90 days
+    if (passwordAge > MAX_PASSWORD_AGE) {
+      return res.status(403).json({
+        success: false,
+        message: "Password expired. Please change your password.",
+      });
+    }
+
     // Check if the user is locked out
     if (user.lockoutExpires && user.lockoutExpires > Date.now()) {
       const remainingTimeInSeconds = Math.max(0, Math.ceil((user.lockoutExpires - Date.now()) / 1000));
@@ -254,6 +263,7 @@ const resetPassword = async (req, res) => {
     user.password = newPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
+    user.passwordChangedAt = new Date();
 
     if (user.previousPasswords.length > 5) {
       user.previousPasswords.shift();
@@ -427,6 +437,22 @@ const logout = (req, res) => {
   });
 };
 
+const notifyPasswordExpiry = async () => {
+  const users = await Users.find({
+    passwordChangedAt: {
+      $lt: new Date(Date.now() - (75 * 24 * 60 * 60 * 1000)) // Notify 15 days before expiry
+    }
+  });
+
+  users.forEach(async (user) => {
+    await sendEmail({
+      email: user.email,
+      subject: "Password Expiry Notice",
+      message: "Your password will expire in 15 days. Please update it to maintain account security.",
+    });
+  });
+};
+
 module.exports = {
   createUser,
   loginUser,
@@ -438,5 +464,6 @@ module.exports = {
   getPagination,
   updateUser,
   logout,
-  checkSession
+  checkSession,
+  notifyPasswordExpiry,
 };

@@ -10,6 +10,9 @@ const session = require('express-session');
 const RedisStore = require('connect-redis').default;
 const redis = require('redis');
 const logRequests = require('./middleware/loggerMiddleware');
+const { setupCronJobs } = require("./middleware/cronjobs");
+const helmet = require("helmet");
+const fs = require('fs');
 
 dotenv.config();
 
@@ -19,6 +22,16 @@ connectDB();
 // Express app initialization
 const app = express();
 app.use(morgan("dev"));
+
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "script-src": [],
+      },
+    },
+  }),
+);
 
 // Set up Redis client
 const redisClient = redis.createClient({
@@ -51,7 +64,8 @@ cloudinary.config({
 // Middleware for handling multimedia
 app.use(acceptMultimedia());
 
-
+// Set up scheduled tasks
+setupCronJobs();
 
 // CORS configuration
 const corsOptions = {

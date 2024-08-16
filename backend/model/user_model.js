@@ -37,6 +37,7 @@ const userSchema = mongoose.Schema({
       default: Date.now,
     }
   }],
+  passwordChangedAt: Date,
   address: {
     type: String,
     default: null,  

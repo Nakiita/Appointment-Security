@@ -67,7 +67,7 @@ function App() {
         <Route path="/footer" element={<Footer />} />
       </Routes>
     </Router>
-    
+
   );
 }
 export default App;
