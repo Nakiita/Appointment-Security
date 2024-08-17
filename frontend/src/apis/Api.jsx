@@ -93,3 +93,11 @@ export const getSingleLogApi = (id) => {
 export const deleteLogApi = (id) => {
   return Api.delete(`/api/logs/${id}`);
 };
+
+// Send OTP API (e.g., during registration or password reset)
+export const sendOtpApi = (data) => { return Api.post(`/api/user/send-otp`, data); };
+
+// Verify OTP API
+export const verifyOtpApi = ({ email, otp }) => {
+  return Api.post(`/api/user/verify-otp`, { email, otp });
+}

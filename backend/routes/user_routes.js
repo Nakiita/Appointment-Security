@@ -4,6 +4,7 @@ const user_controller = require("../controllers/user_controller");
 const { authGuard } = require("../middleware/authGuard");
 const logApiRequests = require("../middleware/loggerMiddleware");
 
+
 router.use(logApiRequests);
 
 // create user api
@@ -28,5 +29,9 @@ router.put("/update_user/:id", user_controller.updateUser);
 router.post('/logout', user_controller.logout);
 
 router.get('/check-session', user_controller.checkSession);
+
+router.post('/verify-otp', user_controller.verifyOTP);
+
+router.post('/send-otp',  user_controller.sendOTP); 
 
 module.exports = router;

@@ -17,12 +17,10 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
   const [strengthColor, setStrengthColor] = useState("");
+  const [errors, setErrors] = useState({});
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
   const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
-
-
-  const [errors, setErrors] = useState({});
 
   const clearError = (field) => {
     setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
@@ -190,20 +188,33 @@ const Register = () => {
       return;
     }
 
+
     setErrors({}); // Clear errors if validation passes
 
-    registerApi(data)
-      .then((res) => {
-        if (res.data.success) {
-          toast.success(res.data.message);
-          navigate("/login");
+    fetch("http://localhost:5000/api/user/register", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        if (responseData.success) {
+          toast.success("Signup successful! Please verify your OTP.");
+          navigate("/verify-otp", { state: { email } });
         } else {
-          toast.error(res.data.message);
+          toast.error(responseData.message || "An error occurred during registration.");
         }
       })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Internal Server Error!");
+      .catch((error) => {
+        toast.error("Error during registration: " + error.message);
       });
   };
 

@@ -9,6 +9,7 @@ const cloudinary = require("cloudinary");
 const MAX_LOGIN_ATTEMPTS = 3; // Set max login attempts
 const LOCKOUT_DURATION = 30 * 60 * 1000; // 30 minutes lockout duration
 const CryptoJS = require("crypto-js");
+const {sendOTP}= require("../middleware/sendOTP");
 
 const securePassword = async (password) => {
   try {
@@ -72,13 +73,35 @@ const createUser = async (req, res) => {
       confirmPassword: encryptedPassword
     });
 
+    // Generate OTP
+    const otp = newUser.generateOTP(); 
+
     // Save the new user to the database
     await newUser.save();
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.SMTP_Email,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+
+    // Define mail options
+    const mailOptions = {
+      from: process.env.SMTP_Email,
+      to: email,
+      subject: 'Verify your email',
+      text: `Your OTP code is ${otp}`,
+    };
+
+    // Send the email with OTP
+    await transporter.sendMail(mailOptions);
 
     // Respond with success
     return res.status(200).json({
       success: true,
-      message: "User registered successfully.",
+      message: "User registered successfully. Now check your email",
     });
 
   } catch (error) {
@@ -87,6 +110,65 @@ const createUser = async (req, res) => {
       success: false,
       message: "Server Error",
       error: error.message,
+    });
+  }
+};
+
+const verifyOTP = async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({
+      success: false,
+      message: "Please provide both email and OTP",
+    });
+  }
+
+  try {
+    const user = await Users.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (Date.now() > user.otpExpires) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP has expired",
+      });
+    }
+
+    const isMatch = await user.compareOTP(otp);
+
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP",
+      });
+    }
+
+    if (!user.isVerified) {
+      user.isVerified = true; // For registration verification
+    }
+
+    // Clear OTP and OTP expiry after successful verification
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "OTP verified successfully.",
+      isVerified: user.isVerified,
+    });
+  } catch (error) {
+    console.error("Error in OTP verification:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
     });
   }
 };
@@ -124,14 +206,14 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const passwordAge = Date.now() - (user.passwordChangedAt?.getTime() || 0);
-    const MAX_PASSWORD_AGE = 90 * 24 * 60 * 60 * 1000; // 90 days
-    if (passwordAge > MAX_PASSWORD_AGE) {
-      return res.status(403).json({
-        success: false,
-        message: "Password expired. Please change your password.",
-      });
-    }
+    // const passwordAge = Date.now() - (user.passwordChangedAt?.getTime() || 0);
+    // const MAX_PASSWORD_AGE = 90 * 24 * 60 * 60 * 1000; // 90 days
+    // if (passwordAge > MAX_PASSWORD_AGE) {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: "Password expired. Please change your password.",
+    //   });
+    // }
 
     // Check if the user is locked out
     if (user.lockoutExpires && user.lockoutExpires > Date.now()) {
@@ -466,4 +548,6 @@ module.exports = {
   logout,
   checkSession,
   notifyPasswordExpiry,
+  verifyOTP,
+  sendOTP
 };

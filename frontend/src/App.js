@@ -23,6 +23,7 @@ import EmergencyContacts from "./pages/User/EmergencyContacts";
 import Footer from "./components/Footer";
 import UserProfile from "./pages/User/UserProfile";
 import LogDashboard from "./pages/admin/LogDashboard";
+import OtpVerification from "./pages/OTPVerification";
 
 
 function App() {
@@ -63,6 +64,8 @@ function App() {
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/success" element={<Success />} />
         <Route path="/emergency" element={<EmergencyContacts />} />
+        <Route path="/verify-otp" element={<OtpVerification />}/>
+
 
         <Route path="/footer" element={<Footer />} />
       </Routes>
